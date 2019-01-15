@@ -1,1 +1,1 @@
-mod dom;
+pub mod dom;
