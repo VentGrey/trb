@@ -9,7 +9,7 @@ pub struct Stylesheet {
 
 //-- Estructura Regla, toma dos parámetros los cuales son un vector selector
 //-- y un vector declaración
-#[derive(PartialEq)]
+#[derive(PartialEq, PartialEq)]
 pub struct Rule {
     pub selectors: Vec<Selector>,
     pub declarations: Vec<Declaration>,
@@ -89,5 +89,31 @@ impl Stylesheet {
 impl Default for Stylesheet {
     fn default() -> Self {
         Stylesheet { rules: Vec::new() }
+    }
+}
+
+//-- Símbolos de depuración para las Stylesheet
+// FIXME: Más de tres niveles de sangría.
+impl fmt::Debug for Stylesheet {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut rule_result = String::new();
+        for rule in &self.rules {
+            if rule_result.len() > 0 {
+                rule_result.push_str("\n\n");
+            }
+            rule_result.push_str(&format!("{:?}", rule));
+        }
+        write!(f, "{}", rule_result)
+    }
+}
+
+//-- Objeto Rule
+// FIXME: Más de 80 columnas de código
+impl Rule {
+    pub fn new(selectors: Vec<Selector>, declarations: Vec<Declaration>) -> Rule {
+        Rule {
+            selectors,
+            declarations,
+        }
     }
 }
