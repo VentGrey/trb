@@ -67,3 +67,13 @@ pub enum Unit {
     Pc,
     Pct,
 }
+
+//-- Estructura de tipo Color que toma un valor flotante del espectro RGBA
+//-- utilizado en CSS
+#[derive(PartialEq, Clone)]
+pub struct Color {
+    pub r: f32,
+    pub g: f32,
+    pub b: f32,
+    pub a: f32,
+}
