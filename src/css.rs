@@ -204,3 +204,41 @@ impl SimpleSelector {
         }
     }
 }
+
+//-- Valores defecto del selector simple
+impl Default for SimpleSelector {
+    fn default() -> Self {
+        SimpleSelector {
+            tag_name: None,
+            id: None,
+            classes: Vec::new(),
+        }
+    }
+}
+
+//-- Símbolos de depuración para el Selector simple
+impl fmt::Debug for SimpleSelector {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut result = String::new();
+
+        match self.tag_name {
+            Some(ref t) => result.push_str(t),
+            None => {}
+        }
+
+        match self.id {
+            Some(ref s) => {
+                result.push('#');
+                result.push_str(s);
+            }
+            None => {}
+        }
+
+        for class in &self.classes {
+            result.push('.');
+            result.push_str(class);
+        }
+
+        write!(f, "{}", result)
+    }
+}
