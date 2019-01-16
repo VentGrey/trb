@@ -77,3 +77,17 @@ pub struct Color {
     pub b: f32,
     pub a: f32,
 }
+
+//-- PROGRAMACIÓN ORIENTADA A OBJETOS INCOMING! (Está bien fea XD)
+impl Stylesheet {
+    pub fn new(rules: Vec<Rule>) -> Stylesheet {
+        Stylesheet { rules }
+    }
+}
+
+//-- Valor por defecto de Stylesheet
+impl Default for Stylesheet {
+    fn default() -> Self {
+        Stylesheet { rules: Vec::new() }
+    }
+}
