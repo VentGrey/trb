@@ -188,3 +188,19 @@ impl fmt::Debug for Selector {
         write!(f, "{}", result)
     }
 }
+
+//-- Objeto Selector Simple
+// TODO: Arreglar el cagadero de nombres que hice, me pasé de turbo verga
+impl SimpleSelector {
+    pub fn new(
+        tag_name: Option<String>,
+        id: Option<String>,
+        classes: Vec<String>,
+    ) -> SimpleSelector {
+        SimpleSelector {
+            tag_name,
+            id,
+            classes,
+        }
+    }
+}
