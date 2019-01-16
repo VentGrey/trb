@@ -242,3 +242,61 @@ impl fmt::Debug for SimpleSelector {
         write!(f, "{}", result)
     }
 }
+
+
+//-- Objeto declaración
+impl Declaration {
+    pub fn new(property: String, value: Value) -> Declaration {
+        Declaration { property, value }
+    }
+}
+
+//-- Valores por defecto de declaración
+impl Default for Declaration {
+    fn default() -> Self {
+        Declaration {
+            property: String::from(""),
+            value: Value::Other(String::from("")),
+        }
+    }
+}
+
+//-- Par de objetos para símbolos de depuración de Declaración y Valor
+impl fmt::Debug for Declaration {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}: {:?}", self.property, self.value)
+    }
+}
+
+impl fmt::Debug for Value {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Value::Color(ref c) => write!(f, "{:?}", c),
+            Value::Length(l, _) => write!(f, "{:?}", l),
+            Value::Other(ref s) => write!(f, "{:?}", s),
+        }
+    }
+}
+
+
+
+//-- Objeto Color
+impl Color {
+    pub fn new(r:f32, g:f32, b:f32, a:f32) -> Self {
+        Color {r, g ,b, a}
+    }
+}
+
+//-- Valores por defecto para Color
+impl Default for Color {
+    fn default() -> Self {
+        Color::new(1.0, 1.0, 1.0, 1.0)
+    }
+}
+
+//-- Símbolos de depuración para Color
+impl fmt::Debug for Color {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "r: {} g: {} b: {} a: {}", self.r, self.g, self.b, self.a)
+    }
+}
