@@ -9,10 +9,10 @@ pub struct Stylesheet {
 
 //-- Estructura Regla, toma dos parámetros los cuales son un vector selector
 //-- y un vector declaración
-#[derive(PartialEq, PartialEq)]
+#[derive(PartialEq, Eq)]
 pub struct Rule {
     pub selectors: Vec<Selector>,
-    pub declarations: Vec<Declaration>,
+    pub declarations: Vec<Declaration>, //FIXME
 }
 
 //-- Estructura Selector conformada por dos elementos, un selector simple y un
@@ -115,5 +115,76 @@ impl Rule {
             selectors,
             declarations,
         }
+    }
+}
+
+//-- Valor defecto para Rule
+impl Default for Rule {
+    fn default() -> Self {
+        Rule {
+            selectors: Vec::new(),
+            declarations: Vec::new(),
+        }
+    }
+}
+
+//-- Símbolos de depuración para Rule
+impl fmt::Debug for Rule {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut sel_result = String::new();
+        let mut decl_result = String::new();
+        let tab = "    ";
+
+        for selector in &self.selectors {
+            if sel_result.len() > 0 {
+                sel_result.push_str(", ");
+            }
+            sel_result.push_str(&format!("{:?}", selector));
+        }
+
+        for declaration in &self.declarations {
+            decl_result.push_str(tab);
+            decl_result.push_str(&format!("{:?}", declaration));
+            decl_result.push('\n');
+        }
+
+        write!(f, "{} {{\n{}}}", sel_result, decl_result)
+    }
+}
+
+//-- Objeto Selector
+// FIXME: Me pasé de la columna 80 otra vez.
+impl Selector {
+    pub fn new(simple: Vec<SimpleSelector>, combinators: Vec<char>) -> Selector {
+        Selector {
+            simple,
+            combinators,
+        }
+    }
+}
+
+//-- Valor por defecto para Selector
+impl Default for Selector {
+    fn default() -> Self {
+        Selector {
+            simple: Vec::new(),
+            combinators: Vec::new(),
+        }
+    }
+}
+
+//-- Símbolos de depuración para el selector
+impl fmt::Debug for Selector {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut result = String::new();
+
+        for sel in &self.simple {
+            if result.len() > 0 {
+                result.push_str(", ");
+            }
+            result.push_str(&format!("{:?}", sel));
+        }
+
+        write!(f, "{}", result)
     }
 }
