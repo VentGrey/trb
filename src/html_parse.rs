@@ -1,16 +1,14 @@
 //-- Importamos nuestra biblioteca dom con todos sus elementos.
-use dom::{AttrMap, ElementData, Node, NodeType};
+use crate::dom::{AttrMap, ElementData, Node, NodeType};
 
 use std::iter::Peekable;
 use std::str::Chars;
-
 
 //-- Estructura principal del parser HTML.
 pub struct HtmlParser<'a> {
     chars: Peekable<Chars<'a>>,
     node_q: Vec<String>,
 }
-
 
 impl<'a> HtmlParser<'a> {
     pub fn new(full_html: &str) -> HtmlParser {
@@ -46,14 +44,16 @@ impl<'a> HtmlParser<'a> {
                     let insert_index = nodes.len();
 
                     match node.node_type {
-                        NodeType::Element(ref e) => if self.node_q.len() > 0 {
-                            let assumed_tag = self.node_q.remove(0);
+                        NodeType::Element(ref e) => {
+                            if self.node_q.len() > 0 {
+                                let assumed_tag = self.node_q.remove(0);
 
-                            if e.tag_name != assumed_tag {
-                                nodes.append(&mut node.children);
-                                self.node_q.insert(0, assumed_tag);
+                                if e.tag_name != assumed_tag {
+                                    nodes.append(&mut node.children);
+                                    self.node_q.insert(0, assumed_tag);
+                                }
                             }
-                        },
+                        }
                         _ => {}
                     }
 
@@ -224,7 +224,6 @@ impl<'a> HtmlParser<'a> {
 
         result
     }
-
 
     fn consume_while<F>(&mut self, condition: F) -> String
     where
