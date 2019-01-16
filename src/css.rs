@@ -31,3 +31,39 @@ pub struct SimpleSelector {
     pub id: Option<String>,
     pub classes: Vec<String>,
 }
+
+//-- Estructura de declaración que toma 2 elementos, propiedad que es un String
+//-- y un tipo de dato llamado Value
+pub struct Declaration {
+    pub property: String,
+    pub value: Value,
+}
+
+//-- Enum de tipo valor que puede tomar solo uno de tres tipos, Color de tipo
+//-- color, Length que toma un flotante y una unidad y un último valor opcional
+pub enum Value {
+    Color(Color),
+    Length(f32, Unit),
+    Other(String),
+}
+
+//-- Enum de tipo unidad para manejar todas las unidades aceptables en el CSS
+#[derive(PartialEq)]
+pub enum Unit {
+    Em,
+    Ex,
+    Ch,
+    Rem,
+    Vh,
+    Vw,
+    Vmin,
+    Vmax,
+    Px,
+    Mm,
+    Q,
+    Cm,
+    In,
+    Pt,
+    Pc,
+    Pct,
+}
