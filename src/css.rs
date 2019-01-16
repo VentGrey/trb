@@ -6,15 +6,13 @@ use std::fmt;
 pub struct Stylesheet {
     pub rules: Vec<Rule>,
 }
-
 //-- Estructura Regla, toma dos parámetros los cuales son un vector selector
 //-- y un vector declaración
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq)]
 pub struct Rule {
     pub selectors: Vec<Selector>,
-    pub declarations: Vec<Declaration>, //FIXME
+    pub declarations: Vec<Declaration>,
 }
-
 //-- Estructura Selector conformada por dos elementos, un selector simple y un
 //-- "combinador".
 #[derive(PartialEq, Eq)]
@@ -22,7 +20,6 @@ pub struct Selector {
     pub simple: Vec<SimpleSelector>,
     pub combinators: Vec<char>,
 }
-
 //-- Estructura Selector simple, toma 3 elementos, el nombre de la etiqueta
 //-- id (para el identificador) y las clases (tomadas de cualquier HTML tag).
 #[derive(PartialEq, Eq)]
@@ -31,22 +28,21 @@ pub struct SimpleSelector {
     pub id: Option<String>,
     pub classes: Vec<String>,
 }
-
 //-- Estructura de declaración que toma 2 elementos, propiedad que es un String
 //-- y un tipo de dato llamado Value
+#[derive(PartialEq)]
 pub struct Declaration {
     pub property: String,
     pub value: Value,
 }
-
 //-- Enum de tipo valor que puede tomar solo uno de tres tipos, Color de tipo
 //-- color, Length que toma un flotante y una unidad y un último valor opcional
+#[derive(PartialEq)]
 pub enum Value {
     Color(Color),
     Length(f32, Unit),
     Other(String),
 }
-
 //-- Enum de tipo unidad para manejar todas las unidades aceptables en el CSS
 #[derive(PartialEq)]
 pub enum Unit {
@@ -67,7 +63,6 @@ pub enum Unit {
     Pc,
     Pct,
 }
-
 //-- Estructura de tipo Color que toma un valor flotante del espectro RGBA
 //-- utilizado en CSS
 #[derive(PartialEq, Clone)]
@@ -77,21 +72,18 @@ pub struct Color {
     pub b: f32,
     pub a: f32,
 }
-
 //-- PROGRAMACIÓN ORIENTADA A OBJETOS INCOMING! (Está bien fea XD)
 impl Stylesheet {
     pub fn new(rules: Vec<Rule>) -> Stylesheet {
         Stylesheet { rules }
     }
 }
-
 //-- Valor por defecto de Stylesheet
 impl Default for Stylesheet {
     fn default() -> Self {
         Stylesheet { rules: Vec::new() }
     }
 }
-
 //-- Símbolos de depuración para las Stylesheet
 // FIXME: Más de tres niveles de sangría.
 impl fmt::Debug for Stylesheet {
@@ -106,7 +98,6 @@ impl fmt::Debug for Stylesheet {
         write!(f, "{}", rule_result)
     }
 }
-
 //-- Objeto Rule
 // FIXME: Más de 80 columnas de código
 impl Rule {
@@ -117,7 +108,6 @@ impl Rule {
         }
     }
 }
-
 //-- Valor defecto para Rule
 impl Default for Rule {
     fn default() -> Self {
@@ -127,7 +117,6 @@ impl Default for Rule {
         }
     }
 }
-
 //-- Símbolos de depuración para Rule
 impl fmt::Debug for Rule {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -151,7 +140,6 @@ impl fmt::Debug for Rule {
         write!(f, "{} {{\n{}}}", sel_result, decl_result)
     }
 }
-
 //-- Objeto Selector
 // FIXME: Me pasé de la columna 80 otra vez.
 impl Selector {
@@ -162,7 +150,6 @@ impl Selector {
         }
     }
 }
-
 //-- Valor por defecto para Selector
 impl Default for Selector {
     fn default() -> Self {
@@ -172,7 +159,6 @@ impl Default for Selector {
         }
     }
 }
-
 //-- Símbolos de depuración para el selector
 impl fmt::Debug for Selector {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -188,7 +174,6 @@ impl fmt::Debug for Selector {
         write!(f, "{}", result)
     }
 }
-
 //-- Objeto Selector Simple
 // TODO: Arreglar el cagadero de nombres que hice, me pasé de turbo verga
 impl SimpleSelector {
@@ -204,7 +189,6 @@ impl SimpleSelector {
         }
     }
 }
-
 //-- Valores defecto del selector simple
 impl Default for SimpleSelector {
     fn default() -> Self {
@@ -215,7 +199,6 @@ impl Default for SimpleSelector {
         }
     }
 }
-
 //-- Símbolos de depuración para el Selector simple
 impl fmt::Debug for SimpleSelector {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -242,15 +225,12 @@ impl fmt::Debug for SimpleSelector {
         write!(f, "{}", result)
     }
 }
-
-
 //-- Objeto declaración
 impl Declaration {
     pub fn new(property: String, value: Value) -> Declaration {
         Declaration { property, value }
     }
 }
-
 //-- Valores por defecto de declaración
 impl Default for Declaration {
     fn default() -> Self {
@@ -260,14 +240,12 @@ impl Default for Declaration {
         }
     }
 }
-
 //-- Par de objetos para símbolos de depuración de Declaración y Valor
 impl fmt::Debug for Declaration {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}: {:?}", self.property, self.value)
     }
 }
-
 impl fmt::Debug for Value {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
@@ -277,23 +255,18 @@ impl fmt::Debug for Value {
         }
     }
 }
-
-
-
 //-- Objeto Color
 impl Color {
-    pub fn new(r:f32, g:f32, b:f32, a:f32) -> Self {
-        Color {r, g ,b, a}
+    pub fn new(r: f32, g: f32, b: f32, a: f32) -> Self {
+        Color { r, g, b, a }
     }
 }
-
 //-- Valores por defecto para Color
 impl Default for Color {
     fn default() -> Self {
         Color::new(1.0, 1.0, 1.0, 1.0)
     }
 }
-
 //-- Símbolos de depuración para Color
 impl fmt::Debug for Color {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
