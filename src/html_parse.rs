@@ -222,7 +222,7 @@ impl<'a> HtmlParser<'a> {
             _ => self.consume_while(is_valid_attr_value),
         };
 
-        result
+        result //TODO Fix Clippy Warning Here
     }
 
     fn consume_while<F>(&mut self, condition: F) -> String
