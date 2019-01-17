@@ -36,10 +36,10 @@ fn render_background(commands: &mut DisplayList, layout_box: &LayoutBox) {
 fn get_color(layout_box: &LayoutBox, name: &str) -> Option<Color> {
     match layout_box.styled_node.value(name) {
         Some(v) => match **v {
-            Value::Color(ref c) => return Some(c.clone()),
-            _ => return None,
+            Value::Color(ref c) => Some(c.clone()),
+            _ => None,
         },
-        None => return None,
+        None => None,
     }
 }
 

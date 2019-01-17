@@ -1,5 +1,4 @@
-use css::{Color, Declaration, Rule, Selector, SimpleSelector, Stylesheet, Unit,
-Value};
+use crate::css::{Color, Declaration, Rule, Selector, SimpleSelector, Stylesheet, Unit, Value};
 
 use std::iter::Peekable;
 use std::str::Chars;
@@ -8,7 +7,6 @@ pub struct CssParser<'a> {
     chars: Peekable<Chars<'a>>,
 }
 
-//-- Constructor enorme
 impl<'a> CssParser<'a> {
     pub fn new(full_css: &str) -> CssParser {
         CssParser {
@@ -16,9 +14,6 @@ impl<'a> CssParser<'a> {
         }
     }
 
-    //-- Función parse_stylesheet, toma como argumento una referencia mutable
-    //-- a sí misma, crea una nueva stylesheet con los valores por defecto y
-    //-- 
     pub fn parse_stylesheet(&mut self) -> Stylesheet {
         let mut stylesheet = Stylesheet::default();
 
