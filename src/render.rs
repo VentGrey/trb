@@ -36,7 +36,7 @@ struct RenderText<'a> {
     color: [f32; 4],
 }
 
-fn render_texts(command_list: &[DisplayCommand]) -> Vec<RenderText> {
+fn render_texts(_command_list: &[DisplayCommand]) -> Vec<RenderText> {
     Vec::new()
 }
 
