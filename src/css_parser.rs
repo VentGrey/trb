@@ -22,7 +22,6 @@ impl<'a> CssParser<'a> {
             let styles = self.parse_declarations();
             let rule = Rule::new(selectors, styles);
 
-
             stylesheet.rules.push(rule);
         }
 
@@ -61,7 +60,8 @@ impl<'a> CssParser<'a> {
         };
 
         let mut multiple_ids = false;
-        while self.chars
+        while self
+            .chars
             .peek()
             .map_or(false, |c| *c != ',' && *c != '{' && !(*c).is_whitespace())
         {
@@ -101,9 +101,11 @@ impl<'a> CssParser<'a> {
         let mut ident = String::new();
 
         match self.chars.peek() {
-            Some(&c) => if is_valid_start_ident(c) {
-                ident.push_str(&self.consume_while(is_valid_ident))
-            },
+            Some(&c) => {
+                if is_valid_start_ident(c) {
+                    ident.push_str(&self.consume_while(is_valid_ident))
+                }
+            }
             None => {}
         }
 
@@ -128,27 +130,28 @@ impl<'a> CssParser<'a> {
             self.chars.next();
             self.consume_while(char::is_whitespace);
 
-            let value = self.consume_while(|x| x != ';' && x != '\n' && x != '}')
+            let value = self
+                .consume_while(|x| x != ';' && x != '\n' && x != '}')
                 .to_lowercase();
 
             let value_enum = match property.as_ref() {
                 "background-color" | "border-color" | "color" => {
                     Value::Color(translate_color(&value))
                 }
-                "margin-right" |
-                "margin-bottom" |
-                "margin-left" |
-                "margin-top" |
-                "padding-right" |
-                "padding-bottom" |
-                "padding-left" |
-                "padding-top" |
-                "border-right-width" |
-                "border-bottom-width" |
-                "border-left-width" |
-                "border-top-width" |
-                "height" |
-                "width" => translate_length(&value),
+                "margin-right"
+                | "margin-bottom"
+                | "margin-left"
+                | "margin-top"
+                | "padding-right"
+                | "padding-bottom"
+                | "padding-left"
+                | "padding-top"
+                | "border-right-width"
+                | "border-bottom-width"
+                | "border-left-width"
+                | "border-top-width"
+                | "height"
+                | "width" => translate_length(&value),
                 _ => Value::Other(value),
             };
 
@@ -169,7 +172,6 @@ impl<'a> CssParser<'a> {
         self.chars.next();
         declarations
     }
-
 
     fn consume_while<F>(&mut self, condition: F) -> String
     where
@@ -220,7 +222,6 @@ fn translate_length(value: &str) -> Value {
         _ => Value::Length(number, Unit::Px),
     }
 }
-
 
 fn translate_color(color: &str) -> Color {
     if color.starts_with("#") {
