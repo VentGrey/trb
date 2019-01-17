@@ -1,10 +1,8 @@
-//-- Importamos nuestra biblioteca dom con todos sus elementos.
 use crate::dom::{AttrMap, ElementData, Node, NodeType};
 
 use std::iter::Peekable;
 use std::str::Chars;
 
-//-- Estructura principal del parser HTML.
 pub struct HtmlParser<'a> {
     chars: Peekable<Chars<'a>>,
     node_q: Vec<String>,
@@ -222,7 +220,7 @@ impl<'a> HtmlParser<'a> {
             _ => self.consume_while(is_valid_attr_value),
         };
 
-        result //TODO Fix Clippy Warning Here
+        result
     }
 
     fn consume_while<F>(&mut self, condition: F) -> String
