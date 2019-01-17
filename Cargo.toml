@@ -1,5 +1,5 @@
 [package]
-name = "tiny-rust-browser"
+name = "tiny_rust_browser"
 version = "0.1.0"
 authors = ["VentGrey <omarpurataf@gmail.com>"]
 edition = "2018"
