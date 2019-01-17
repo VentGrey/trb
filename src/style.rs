@@ -1,8 +1,8 @@
-use crate::css::{Selector, Stylesheet, Value};
-use crate::dom::{ElementData, Node, NodeType};
-
 use std::collections::HashMap;
 use std::{fmt, str};
+
+use crate::css::{Selector, Stylesheet, Value};
+use crate::dom::{ElementData, Node, NodeType};
 
 type PropertyMap<'a> = HashMap<&'a str, &'a Value>;
 
@@ -83,6 +83,12 @@ impl<'a> StyledNode<'a> {
             },
             None => default,
         }
+    }
+}
+
+impl<'a> fmt::Debug for StyledNode<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}: {:?}", self.node, self.styles)
     }
 }
 
